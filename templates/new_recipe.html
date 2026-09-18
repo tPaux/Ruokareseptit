@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etusivu</title>
+</head>
+
+<body>
+    <p>
+    {{ message }}
+    </p>
+    <p>
+    <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b>{{ session.username }}</b> <br />
+    </p>
+    {% else %}
+    Kirjaudu sisään <br />
+        <form action="/login" method="post">
+            <p>
+                Tunnus: <br />
+                <input type="text" name="username" />
+            </p>
+            <p>
+                Salasana: <br />
+                <input type="password" name="password" />
+            </p>
+            <input type="submit" value="Kirjaudu" />
+        </form>
+        <p>
+            <a href="/register">Luo tunnus</a>
+        </p>
+    {% endif %}
+
+
+    {% if session.username %}
+    <p>
+        <h2>Uusi resepti</h2>
+    </p>
+    <hr />
+        <form action="/new_recipe" method="post">
+            <p>
+                Reseptin nimi: <br />
+                <textarea name="name" rows="1" cols="40"></textarea>
+            </p>
+            <p>
+                Ainesosat: <br />
+                <textarea name="ingredients" rows="20" cols="40"></textarea>
+            </p>
+            <p>
+                Valmistusohje: <br />
+                <textarea name="instructions" rows="20" cols="40"></textarea>
+            </p>
+                <input type="submit" value="Lähetä" />
+        </form>
+        <hr />
+    {% endif %}
+
+
+</body>
+
+</html>

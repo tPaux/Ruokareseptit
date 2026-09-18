@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etusivu</title>
+</head>
+<body>
+  <p>
+    {{ message }}
+    </p>
+    <p>
+    <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b>{{ session.username }}</b> <br />
+    </p>
+    {% else %}
+    Kirjaudu sisään <br />
+        <form action="/login" method="post">
+            <p>
+                Tunnus: <br />
+                <input type="text" name="username" />
+            </p>
+            <p>
+                Salasana: <br />
+                <input type="password" name="password" />
+            </p>
+            <input type="submit" value="Kirjaudu" />
+        </form>
+        <p>
+            <a href="/register">Luo tunnus</a>
+        </p>
+    {% endif %}
+
+  <p>
+    <h2>{{ recipe.name }}</h2>
+  </p>
+  <hr />
+  <p>
+    {{ recipe.ingredients }}
+  </p>
+  <p>
+    {{ recipe.instructions }}
+  </p>
+  {% if recipe.user_id == session.user_id %}
+  <p>
+    <a href="/edit/{{ recipe.id }}">Muokkaa</a> |
+    <a href="/remove/{{ recipe.id }}">Poista</a>
+  </p>
+  {% endif %}
+  <hr />
+</body>
+
+</html>

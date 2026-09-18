@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etusivu</title>
+</head>
+<body>
+    <p>
+    {{ message }}
+    </p>
+    <p>
+    <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b>{{ session.username }}</b> <br />
+    </p>
+    {% else %}
+    Kirjaudu sisään <br />
+        <form action="/login" method="post">
+            <p>
+                Tunnus: <br />
+                <input type="text" name="username" />
+            </p>
+            <p>
+                Salasana: <br />
+                <input type="password" name="password" />
+            </p>
+            <input type="submit" value="Kirjaudu" />
+        </form>
+        <p>
+            <a href="/register">Luo tunnus</a>
+        </p>
+    {% endif %}
+    <p>
+        <h2>Haku</h2>
+    </p>
+    <hr />
+    <form action="/search" method="get">
+        <p>
+            Hakusana:
+            {% if query %}
+                <input type="text" name="query" value="{{ query }}" />
+            {% else %}
+                <input type="text" name="query" />
+            {% endif %}
+        </p>
+    <input type="submit" value="Hae" />
+    </form>
+</p>
+<hr />
+<p>
+    {% if query %}
+        <h2>Tulokset</h2>
+        {% if results %}
+            <ul>
+            {% for result in results %}
+                <li>
+                    <a href="/recipe/{{ result.id }}">{{ result.name }}</a> käyttäjältä {{ result.username }}
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Ei tuloksia</p>
+        {% endif %}
+    <hr />
+    {% endif %}
+  </p>
+</body>
+
+</html>
