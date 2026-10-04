@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etusivu</title>
+</head>
+<body>
+  <p>
+    {{ message }}
+    </p>
+    <p>
+    <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b><a href="/user">{{ session.username }}</a></b> <br />
+    </p>
+    {% endif %}
+
+  <div>
+     <form action="/add_image" method="post" enctype="multipart/form-data">
+        <p>
+            Kuva: <input type="file" name="image" accept=".jpg" />
+        </p>
+        <input type="submit" value="Lähetä" />
+  </form>
+  </div>
+</body>
+
+</html>

@@ -11,24 +11,8 @@
     </p>
     <p>
     <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
-         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b>{{ session.username }}</b> <br />
+         Lisää resepti | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b><a href="/user/{{ session.user_id }}">{{ session.username }}</a></b> <br />
     </p>
-    {% else %}
-    Kirjaudu sisään <br />
-        <form action="/login" method="post">
-            <p>
-                Tunnus: <br />
-                <input type="text" name="username" />
-            </p>
-            <p>
-                Salasana: <br />
-                <input type="password" name="password" />
-            </p>
-            <input type="submit" value="Kirjaudu" />
-        </form>
-        <p>
-            <a href="/register">Luo tunnus</a>
-        </p>
     {% endif %}
 
 
@@ -50,6 +34,7 @@
                 Valmistusohje: <br />
                 <textarea name="instructions" rows="20" cols="40"></textarea>
             </p>
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
                 <input type="submit" value="Lähetä" />
         </form>
         <hr />

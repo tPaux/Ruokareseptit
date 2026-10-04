@@ -1,7 +1,8 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE,
-    password_hash TEXT
+    password_hash TEXT,
+    image BLOB
 );
 
 CREATE TABLE recipes (
@@ -9,6 +10,8 @@ CREATE TABLE recipes (
     name TEXT,
     ingredients TEXT,
     instructions TEXT,
+    image BLOB,
+    sent_at TEXT,
     user_id INTEGER REFERENCES users
 );
 

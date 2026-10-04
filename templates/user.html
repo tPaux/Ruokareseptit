@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etusivu</title>
+</head>
+<body>
+  <p>
+    {{ message }}
+    </p>
+    <p>
+    <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b>{{ session.username }}</b> <br />
+    </p>
+    {% else %}
+    Kirjaudu sisään <br />
+        <form action="/login" method="post">
+            <p>
+                Tunnus: <br />
+                <input type="text" name="username" />
+            </p>
+            <p>
+                Salasana: <br />
+                <input type="password" name="password" />
+            </p>
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+            <input type="submit" value="Kirjaudu" />
+        </form>
+        <p>
+            <a href="/register">Luo tunnus</a>
+        </p>
+    {% endif %}
+
+  <div>
+    <h1>Käyttäjä {{ user.username }}</h1>
+    <table>
+      <tr>
+        <td>
+          <p>
+            Käyttäjä on tallentanut {{ recipes | count }} reseptiä ja kirjoittanut {{ messages | count }} kommenttia.
+          </p>
+          {% if recipes %}
+          <p>
+            Viimeisin resepti tallennettu {{ recipes[0].sent_at }}
+          </p>
+          {% endif %}
+          {% if messages %}
+          <p>
+            Viimeisin kommentti kirjoitettu {{ messages[0].sent_at }}
+          </p>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.has_image %}
+            <img src="/profile_image/{{ user.id }}" />
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <ul>
+    {% for recipe in recipes %}
+      <li>
+        <a href="/recipe/{{ recipe.id }}">
+            {{ recipe.name }}
+        </a>
+        <br />
+        ({{ recipe.sent_at }})
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <ul>
+    {% for message in messages %}
+      <li>
+        <a href="/recipe/{{ recipes.recipe_id }}#{{ message.id }}">
+            {{ recipe.name}}{{ message.sent_at }} <!-- miten tän saisi toimimaan? for recipe.. -->
+        </a>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+
+</html>
