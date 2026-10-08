@@ -39,7 +39,7 @@
     <hr />
     {% for recipe in recipes %}
         <p>
-            <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a> käyttäjältä {{ recipe.username }}
+            <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a> käyttäjältä <a href="/user/{{ recipe.user_id }}">{{ recipe.username }}</a>
         </p>
         <hr />
     {% endfor %}

@@ -1,12 +1,15 @@
 import db
+import sqlite3
 
 def get_user(user_id):
-    sql = "SELECT id, username, image IS NOT NULL has_image FROM users WHERE id = ?"
+    sql = """SELECT id, username, image IS NOT NULL has_image
+             FROM users
+             WHERE id = ?"""
     result = db.query(sql, [user_id])
     return result[0] if result else None
 
 def get_recipes(user_id):
-    sql = """SELECT r.id,
+    sql = """SELECT r.id, r.user_id,
                     r.name
              FROM recipes r
              WHERE r.user_id = ?
@@ -28,5 +31,11 @@ def update_image(user_id, image):
     db.execute(sql, [image, user_id ])
 
 def get_image(user_id):
-    pass #TODO
+    sql = """SELECT image
+                FROM users
+                WHERE id = ?"""
+    result = db.query(sql, [user_id])
+    if len(result) == 0:
+        return None
+    return result[0]["image"]
 

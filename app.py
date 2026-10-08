@@ -1,7 +1,4 @@
-from flask import Flask
-from flask import render_template, request, redirect, session
-from flask import g
-from flask import abort
+from flask import Flask, render_template, request, redirect, session, g, abort, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
 import db
@@ -171,15 +168,17 @@ def add_profile_image():
             return render_template("add_profile_image.html", message=message)
         user_id = session["user_id"]
         users.update_image(user_id, image)
+        print("image uploaded")
         return redirect("/user/" + str(user_id))
 
-@app.route("/profile_image/<int:user_id>")
+@app.route("/profile_image/<int:user_id>", strict_slashes=False)
 def show_profile_image(user_id):
     image = users.get_image(user_id)
     if not image:
+        print("no image")
         abort(404)
-
-    response = make_response(bytes(image))
+    print("image exists")
+    response = make_response(image)
     response.headers.set("Content-Type", "image/jpeg")
     return response
 

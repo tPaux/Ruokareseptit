@@ -1,7 +1,8 @@
 import db
+import sqlite3
 
 def get_recipes():
-    sql= """SELECT r.id, r.name, u.username
+    sql= """SELECT r.id, r.name, u.username, r.user_id
             FROM recipes r
             LEFT JOIN users u ON r.user_id = u.id
             GROUP BY r.id
@@ -35,6 +36,7 @@ def search(query):
     sql = """SELECT r.id,
                     r.name,
                     u.username
+                    u.id
              FROM recipes r
               JOIN users u ON r.user_id = u.id
              WHERE (r.ingredients LIKE ?

@@ -52,7 +52,13 @@
         </td>
         <td>
           {% if user.has_image %}
-            <img src="/profile_image/{{ user.id }}" />
+            <a href="/add_profile_image"><img src="/profile_image/{{ user.id }}" /></a>
+          {% else %}
+            {% if session.username == user.username %}
+              <a href="/add_profile_image">Lisää kuva</a>
+            {% else %}
+              <p>Ei kuvaa</p>
+            {% endif %}
           {% endif %}
         </td>
       </tr>

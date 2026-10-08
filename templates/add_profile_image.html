@@ -10,15 +10,16 @@
     </p>
     <p>
     <a href="/">Etusivu</a> | <a href="/search">Haku</a> | {% if session.username %}
-         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b><a href="/user">{{ session.username }}</a></b> <br />
+         <a href="/new_recipe">Lisää resepti</a> | <a href="/logout">Kirjaudu ulos</a> | Olet kirjautunut nimellä <b><a href="/user/{{ session.user_id }}">{{ session.username }}</a></b> <br />
     </p>
     {% endif %}
 
   <div>
-     <form action="/add_image" method="post" enctype="multipart/form-data">
+     <form action="/add_profile_image" method="post" enctype="multipart/form-data">
         <p>
             Kuva: <input type="file" name="image" accept=".jpg" />
         </p>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Lähetä" />
   </form>
   </div>
